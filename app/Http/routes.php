@@ -23,7 +23,7 @@ Route::get('/home', function () {
 Route::resource('users', 'UserController');
 Route::resource('books', 'BookController');
 
-// Route for list of book which having some user with id TODO POST
+// Route for list of book which having some user with id
 Route::get('users/{uid}/books', 'BookController@usersBooks');
 
 // Route for returning the book

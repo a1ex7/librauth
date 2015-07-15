@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
-use App\Book;
 
 
 class UserController extends Controller
@@ -162,4 +161,5 @@ class UserController extends Controller
 
         return Redirect::to('users');
     }
+
 }

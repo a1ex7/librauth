@@ -41,7 +41,10 @@
         </tbody>
     </table>
 
-    <a href="{{ URL::to('books/users/'. $user_id) }}" class="btn btn-primary">Add book</a>
+    <div>
+        <a href="{{ URL::to('books/users/'. $user_id) }}" class="btn btn-primary">Add book</a>
+    </div>
+
 
     {!! $books->render() !!}
 

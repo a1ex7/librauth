@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Jobs;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +85,9 @@ class BookController extends Controller
             $book->save();
 
             Session::flash('message', 'New book successfully created');
+
+            $job = (new Jobs\SendAddNewBookEmail($book))->onQueue('emails');
+            $this->dispatch($job);
 
             return Redirect::to('books');
 
@@ -236,6 +241,22 @@ class BookController extends Controller
             'message', 'Book with ID: ' . $bid . ' successfully add to user with ID: ' . $uid
         );
 
+        $this->sendReminderEmail($user, $book);
+
         return Redirect::to('books/users/' . $uid);
+    }
+
+    /**
+     * Send a reminder e-mail to a given user.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function sendReminderEmail($user, $book)
+    {
+        $job = (new Jobs\SendReminderEmail($user, $book))->delay(60 * 60 * 24 * 30);
+
+        $this->dispatch($job);
     }
 }

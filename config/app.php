@@ -148,6 +148,7 @@ return [
         /*
          * Other service providers...
          */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
