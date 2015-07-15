@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'BookTableSeeder' => $baseDir . '/database/seeds/BookTableSeeder.php',
     'CreateBooksTable' => $baseDir . '/database/migrations/2015_07_07_124704_create_books_table.php',
+    'CreateFailedJobsTable' => $baseDir . '/database/migrations/2015_07_15_131545_create_failed_jobs_table.php',
     'CreateJobsTable' => $baseDir . '/database/migrations/2015_07_15_070248_create_jobs_table.php',
     'CreateUsersBooksTable' => $baseDir . '/database/migrations/2015_07_09_065526_create_users_books_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_07_07_124639_create_users_table.php',

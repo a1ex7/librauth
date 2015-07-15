@@ -86,7 +86,7 @@ class BookController extends Controller
 
             Session::flash('message', 'New book successfully created');
 
-            $job = (new Jobs\SendAddNewBookEmail($book))->onQueue('emails');
+            $job = (new Jobs\SendAddNewBookEmail($book));
             $this->dispatch($job);
 
             return Redirect::to('books');
