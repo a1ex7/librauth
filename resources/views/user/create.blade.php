@@ -5,7 +5,9 @@
 
 @section('content')
 
-    {!! HTML::ul($errors->all()) !!}
+    @if (count($errors) > 0)
+        {!! HTML::ul($errors->all()) !!}
+    @endif
 
     {!! Form::open(['url' => 'users']) !!}
 
