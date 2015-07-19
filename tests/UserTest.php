@@ -12,6 +12,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase
 {
+    public function testGuestRedirect()
+    {
+        $this->visit('/users')
+            ->seePageIs('/auth/login');
+    }
 
     public function testNewUserRegistration()
     {
