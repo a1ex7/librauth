@@ -61,6 +61,7 @@
             };
 
             conn.onmessage = function(e) {
+                console.log(e);
                 $('#chat').append('<div class="alert alert-info text-left">' + e.data + '</div>');
             };
 
