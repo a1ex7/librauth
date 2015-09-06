@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return Redirect::to('books');
+    return View('welcome');
 });
 
 Route::resource('users', 'UserController');
