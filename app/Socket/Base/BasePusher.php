@@ -15,7 +15,19 @@ use Ratchet\Wamp\WampServerInterface;
 class BasePusher implements WampServerInterface
 {
 
+    /**
+     * A lookup of all the topics clients have subscribed to
+     */
+    protected $subscribedTopics = [];
 
+
+    /**
+     * @return mixed
+     */
+    public function getSubscribedTopics()
+    {
+        return $this->subscribedTopics;
+    }
 
     /**
      * When a new connection is opened it will be passed to this method
@@ -26,7 +38,7 @@ class BasePusher implements WampServerInterface
      */
     function onOpen(ConnectionInterface $conn)
     {
-        // TODO: Implement onOpen() method.
+        echo "New connection! ({$conn->resourceId})\n";
     }
 
 
@@ -39,7 +51,7 @@ class BasePusher implements WampServerInterface
      */
     function onClose(ConnectionInterface $conn)
     {
-        // TODO: Implement onClose() method.
+        echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
 
@@ -54,7 +66,9 @@ class BasePusher implements WampServerInterface
      */
     function onError(ConnectionInterface $conn, \Exception $e)
     {
-        // TODO: Implement onError() method.
+        echo "An error has occurred: {$e->getMessage()}\n";
+
+        $conn->close();
     }
 
 
@@ -68,7 +82,8 @@ class BasePusher implements WampServerInterface
      */
     function onCall(ConnectionInterface $conn, $id, $topic, array $params)
     {
-        // TODO: Implement onCall() method.
+        // In this application if clients send data it's because the user hacked around in console
+        $conn->callError($id, $topic, 'You are not allowed to make calls')->close();
     }
 
 
@@ -80,7 +95,7 @@ class BasePusher implements WampServerInterface
      */
     function onSubscribe(ConnectionInterface $conn, $topic)
     {
-        // TODO: Implement onSubscribe() method.
+        $this->subscribedTopics[$topic->getId()] = $topic;
     }
 
 
@@ -107,5 +122,7 @@ class BasePusher implements WampServerInterface
      */
     function onPublish(ConnectionInterface $conn, $topic, $event, array $exclude, array $eligible)
     {
-        // TODO: Implement onPublish() method.
-}}
+        // In this application if clients send data it's because the user hacked around in console
+        $conn->close();
+    }
+}
