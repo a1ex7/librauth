@@ -6,9 +6,9 @@
  * Time: 16:06
  */
 
-namespace app\Socket;
+namespace App\Socket;
 
-use app\Socket\Base\BasePusher;
+use App\Socket\Base\BasePusher;
 
 class Pusher extends BasePusher
 {
