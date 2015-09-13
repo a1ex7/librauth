@@ -10,7 +10,8 @@
         "illuminate/html":"5.0.*",
         "barryvdh/laravel-ide-helper": "^2.0",
         "laravel/socialite": "v2.0.8",
-        "cboden/ratchet": "^0.3.3"
+        "cboden/ratchet": "^0.3.3",
+        "react/zmq": "0.2.*|0.3.*"
 
     },
     "require-dev": {
