@@ -20,6 +20,16 @@ Route::get('/home', function () {
     return View('welcome');
 });
 
+Route::post('/send_message', function () {
+    $input = \Illuminate\Support\Facades\Input::all();
+    $data = [
+        'topic_id' => 'onNewMessage',
+        'data'     => $input['message']
+    ];
+    \App\Socket\Pusher::sendDataToServer($data);
+    return redirect('/home');
+});
+
 Route::resource('users', 'UserController');
 Route::resource('books', 'BookController');
 

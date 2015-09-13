@@ -55,21 +55,47 @@
         <script src="https://code.jquery.com/jquery-git2.min.js"></script>
 
         <script>
-            var conn = new WebSocket('ws://localhost:8080');
-            conn.onopen = function(e) {
-                console.log("Connection established!");
-            };
-
-            conn.onmessage = function(e) {
-                console.log(e);
-                $('#chat').append('<div class="alert alert-info text-left">' + e.data + '</div>');
-            };
-
+//            var conn = new WebSocket('ws://localhost:8080');
+//            conn.onopen = function(e) {
+//                console.log("Connection established!");
+//            };
+//
+//            conn.onmessage = function(e) {
+//                console.log(e);
+//                $('#chat').append('<div class="alert alert-info text-left">' + e.data + '</div>');
+//            };
+//
             send = function() {
                 message = $('#message').val();
-                conn.send(message);
+                $.ajax({
+                    method: "POST",
+                    url: "/send_message",
+                    data: {'message': message}
+                });
                 $('#message').val('');
             }
+
+        </script>
+
+        <script src="http://autobahn.s3.amazonaws.com/js/autobahn.min.js"></script>
+        <script>
+            var conn = new ab.connect(
+                    'ws://localhost:8080',
+                    function(session) {
+                        session.subscribe('onNewMessage', function(topic, data) {
+                            console.log('New Message "' + topic + '" : ' + data.data);
+                            $('#chat').append('<div class="alert alert-info text-left">' + data.data + '</div>');
+                        });
+                    },
+                    function(code, reason, detail) {
+                        console.warn('WebSocket connection closed (code, reason, detail): ', code, reason, detail);
+                    },
+                    {
+                        'maxRetries': 60,
+                        'retryDelay': 4000,
+                        'skipSubprotocolCheck': true
+                    }
+            );
         </script>
 
     </body>
